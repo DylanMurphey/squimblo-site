@@ -1,0 +1,131 @@
+body {
+    background-color: #393646;
+    color: #F4EEE0;
+    font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', sans-serif;
+    font-size:1.25rem;
+}
+
+p, h1 {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+h1 {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #F4EEE0;
+    cursor: pointer; /* needed for the placeholder Inbox button */
+}
+
+ul.nav {
+    padding-left: 0px;
+    background-color: #4F4557;
+    text-align: right;
+}
+
+img.logo {
+    float:inline-start;
+}
+
+.wordmark {
+    font-size: 2rem;
+    display: inline;
+    float:left;
+    margin-right:20px;
+}
+
+ul.nav>a {
+    display: block;
+}
+
+ul.nav>li {
+    display: inline-block;
+}
+
+ul.nav>li#button:hover {
+    background-color: #6D5D6E;
+}
+
+ul.nav>li#button>a {
+    color: #F4EEE0;
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+.copyright-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center; 
+}
+
+/* tables */
+table, th, td {
+    margin: auto auto auto auto;
+    text-align: left;
+    border:solid #F4EEE0;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+}
+
+table#ladders {
+    margin-left: 25%;
+}
+
+/* login stuff */
+.login-container {
+    border: 1px solid;
+    width: 30%;
+    padding: 10px;
+
+    vertical-align: top;
+    display:inline-block;
+    margin: 0 5px;
+}
+
+.login-wrapper {
+    text-align: center;
+}
+
+
+ /* sidebar menu - borrowed from https://www.w3schools.com/howto/howto_css_fixed_sidebar.asp */
+ .sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 20%; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 100; /* Stay at the top */
+    left: 0;
+    background-color: #2b252f;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    margin-right: 5%;
+    text-align: right;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  } 
