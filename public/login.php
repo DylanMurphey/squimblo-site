@@ -3,8 +3,12 @@
     require_once("../private/header.php");
     require_once("../private/Dao.php");
     $dao = new Dao("comments.log");
+
+    // password test
+    echo var_export($dao->verifyPassword("test@example.com",'fart'));
 ?>
 
+<!-- users test/ -->
 <table>
     <thead>
         <tr>
@@ -19,6 +23,7 @@
         }
     ?>
 </table>
+<!-- /users test -->
 
 <div class="login-wrapper">
     <div class="login-container" id="login-field">

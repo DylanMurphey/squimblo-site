@@ -19,4 +19,14 @@
             $result = $conn->query("SELECT username, display_name from users");
             return $result->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function verifyPassword($email, $password) {
+            $conn = $this->getConnection();
+            $result = $conn->query("SELECT passhash FROM users WHERE email = '$email'")->fetch();
+            if ($result) {
+                return password_verify($password, $result['passhash']);
+            } else {
+                return false;
+            }
+        }
     }
