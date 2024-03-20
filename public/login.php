@@ -14,8 +14,8 @@
     </thead>
     <?php
         $lines = $dao->getUsers();
-        foreach ($users as $user) {
-            echo "<tr><td>{$user['username']}</td><td>{$user['Display Name']}</td></tr>";
+        foreach ($lines as $user) {
+            echo "<tr><td>{$user['username']}</td><td>{$user['display_name']}</td></tr>";
         }
     ?>
 </table>

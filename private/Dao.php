@@ -16,6 +16,7 @@
 
         public function getUsers() {
             $conn = $this->getConnection();
-            return $conn->query("SELECT * from users;")->fetchAll(PDO::FETCH_ASSOC);
+            $result = $conn->query("SELECT username, display_name from users");
+            return $result->fetchAll(PDO::FETCH_ASSOC);
         }
     }
