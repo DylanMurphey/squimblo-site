@@ -1,4 +1,4 @@
-<?php $pagename = "Sign In"; include_once ("header.php"); ?>
+<?php $pagename = "Sign In"; include_once("../private/header.php"); ?>
 
 <div class="login-wrapper">
     <div class="login-container" id="login-field">
@@ -23,4 +23,4 @@
     </div>
 </div>
 
-<?php include_once ("footer.php") ?>
+<?php include_once("../private/footer.php") ?>
