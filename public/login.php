@@ -1,4 +1,24 @@
-<?php $pagename = "Sign In"; include_once("../private/header.php"); ?>
+<?php
+    $pagename = "Sign In";
+    require_once("../private/header.php");
+    require_once("../private/Dao.php");
+    $dao = new Dao("comments.log");
+?>
+
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Display Name</th>
+        </tr>
+    </thead>
+    <?php
+        $lines = $dao->getUsers();
+        foreach ($users as $user) {
+            echo "<tr><td>{$user['username']}</td><td>{$user['Display Name']}</td></tr>";
+        }
+    ?>
+</table>
 
 <div class="login-wrapper">
     <div class="login-container" id="login-field">
