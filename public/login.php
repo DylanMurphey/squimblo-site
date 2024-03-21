@@ -1,26 +1,36 @@
-<?php $pagename = "Sign In"; include_once ("header.php"); ?>
+<?php
+    $pagename = "Sign In";
+    require_once("../private/header.php");
+    require_once("../private/Dao.php");
+    $dao = new Dao("comments.log");
+
+    // kick users back who sneakily revisit login page
+    if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
+        header("Location: {$THIS_DOMAIN}/index.php");
+        exit();
+    }
+?>
 
 <div class="login-wrapper">
     <div class="login-container" id="login-field">
-        <label for="uname"><b>Existing user</b><br /></label>
-        <input type="text" placeholder="Username" name="uname" required><br />
-        <input type="password" placeholder="Password / SSN" name="psw" required><br />
-
-        <label>
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
-        <button type="submit">Login</button>
+        <form method="post" action="login_handler.php">
+            <label for="username"><b>Existing user</b><br /></label>
+            <input type="text" placeholder="Username" name="username" required><br />
+            <input type="password" placeholder="Password" name="password" required><br />
+            <button type="submit" value="Login">Login</button>
+        </form>
     </div>
 
     <div class="login-container" id="signup-field">
-        <label for="uname"><b>New user</b><br /></label>
-        <input type="text" placeholder="Email" name="psw" required><br />
-        <input type="text" placeholder="Username" name="uname" required><br />
-        <input type="password" placeholder="Password / SSN" name="psw" required><br />
-        <input type="password" placeholder="Confirm Password / SSN" name="psw" required><br />
-
-        <button type="submit">Sign up</button>
+        <form method="post" action="registration_handler.php">
+            <label for="username"><b>New user</b><br /></label>
+            <input type="text" placeholder="Username" name="username" required><br />
+            <input type="text" placeholder="Email Address" name="email" required><br />
+            <input type="password" placeholder="Password" name="password" required><br />
+            <input type="password" placeholder="Confirm Password" name="password_confirm" required><br />
+            <button type="submit">Sign up</button>
+        </form>
     </div>
 </div>
 
-<?php include_once ("footer.php") ?>
+<?php include_once("../private/footer.php") ?>

@@ -1,4 +1,4 @@
-<?php $pagename = "Matches"; include_once ("header.php"); ?>
+<?php $pagename = "Matches"; include_once("../private/header.php"); ?>
 <table id="matches">
   <thead>
     <tr>
@@ -30,4 +30,4 @@
   </tbody>
 </table>
 
-<?php include_once("footer.php");?>
+<?php include_once("../private/footer.php");?>
