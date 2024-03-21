@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title><?php if (isset($pagename)) {echo $pagename, "Squimblo - ";}
+    <title><?php if (isset($pagename)) {echo $pagename, " - Squimblo";}
                  else {echo "Squimblo";} ?></title>
 
         <link rel="stylesheet" href="styles.css">
