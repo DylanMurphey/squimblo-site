@@ -28,13 +28,22 @@
             return $result->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        /**
+         * If correct, returns ['correct'=>true, 'user_id', 'username']
+         * 
+         * If not, returns ['correct'=>false]
+         */
         public function verifyPassword($username, $password) {
             $conn = $this->getConnection();
-            $result = $conn->query("SELECT passhash FROM users WHERE username = '$username'")->fetch();
+            $result = $conn->query("SELECT passhash, user_id, username FROM users WHERE username = '$username'")->fetch();
             if ($result) {
-                return password_verify($password, $result['passhash']);
+                if (password_verify($password, $result['passhash'])) {
+                    return ['correct'=>true, 'user_id'=>$result['user_id'], 'username'=>$result['username']];
+                } else {
+                    return ['correct'=>false];
+                }
             } else {
-                return false;
+                return ['correct'=>false];
             }
         }
 

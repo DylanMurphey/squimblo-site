@@ -34,9 +34,12 @@
                 break;
         }
 
-        if ($dao->verifyPassword($username, $password)) {
-            $_SESSION['authenticated'] = true;
-            $_SESSION['username'] = $username;
+        $vp = $dao->verifyPassword($username, $password);
+         
+        if ($vp['correct']) {
+          $_SESSION['authenticated'] = true;
+          $_SESSION['username'] = $vp['username'];
+          $_SESSION['user_id'] = $vp['user_id'];
             header("Location: {$THIS_DOMAIN}/index.php");
             exit();
         } else {
