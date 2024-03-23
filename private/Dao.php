@@ -35,10 +35,10 @@
          */
         public function verifyPassword($username, $password) {
             $conn = $this->getConnection();
-            $result = $conn->query("SELECT passhash, user_id, username FROM users WHERE username = '$username'")->fetch();
+            $result = $conn->query("SELECT passhash, id, username FROM users WHERE username = '$username' LIMIT 1;")->fetch();
             if ($result) {
                 if (password_verify($password, $result['passhash'])) {
-                    return ['correct'=>true, 'user_id'=>$result['user_id'], 'username'=>$result['username']];
+                    return ['correct'=>true, 'user_id'=>$result['id'], 'username'=>$result['username']];
                 } else {
                     return ['correct'=>false];
                 }
@@ -56,7 +56,7 @@
          */
         public function createUser($username, $password, $email) {
             $conn = $this->getConnection();
-            $name_check = $conn->query("SELECT * FROM users WHERE username = '$username'")->fetch();
+            $name_check = $conn->query("SELECT * FROM users WHERE username = '$username' LIMIT 1;")->fetch();
 
             if ($name_check) {
                 return QueryResult::FAILED_USER_NOT_UNIQUE;

@@ -29,6 +29,5 @@
             echo "<li id='button'><a href='/login.php'>Sign in</a></li>";
         }
         ?>
-
     </ul>
 <!-- end header.php -->
