@@ -9,7 +9,6 @@
     }
 
     class Dao {
-
         public function getConnection() {
             $db = parse_url(getenv("DATABASE_URL"));
             return new PDO("pgsql:" . sprintf(
@@ -84,5 +83,26 @@
                     return QueryResult::FAILED_EMAIL_NOT_UNIQUE;
                 }
             }
+        }
+
+        public function getLadders($user_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT 
+                                    ladders.title AS ladder_title,
+                                    ladders.id    AS ladder_id
+                                 FROM     placements
+                                     JOIN ladders
+                                         ON placements.ladder = ladders.id
+                                 WHERE  placements.player = :user_id;  ");
+
+            $q->bindParam(":user_id", $user_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $q->execute();
+            return $q->fetchAll(PDO::FETCH_ASSOC);
         }
     }

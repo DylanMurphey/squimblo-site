@@ -1,10 +1,27 @@
-<?php $pagename = "Ladders"; include_once("../private/header.php") ?>
-    <div class="sidenav">
-        <a href="#">Johnny's ladder</a>
-        <a href="#">Jacob's ladder</a>
-        <a href="#">Lowe's ladder</a>
-        <a href="#">Ace's ladder</a>
-    </div>
+<?php 
+  $pagename = "Ladders";
+  require_once("../private/header.php") ;
+  require_once("../private/Dao.php");
+  $dao = new Dao;
+
+  $ladders = $dao->getLadders($_SESSION['user_id']);
+
+  echo(print_r($ladders));
+  echo(count($ladders));
+  echo "<br/>";
+  echo print_r($_GET);
+
+  if (count($ladders) > 0) {
+    echo "<div class='sidenav'>";
+    foreach ($ladders as $l) {
+      $title = $l['ladder_title'];
+      $id    = $l['ladder_id'];
+      echo "<a href='?view_ladder={$id}'>{$title}</a>";
+    }
+    echo "</div>";
+  }
+
+?>
 
     <table id="ladders">
         <thead>
