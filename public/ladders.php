@@ -6,11 +6,6 @@
 
   $ladders = $dao->getLadders($_SESSION['user_id']);
 
-  echo(print_r($ladders));
-  echo(count($ladders));
-  echo "<br/>";
-  echo print_r($_GET);
-
   if (count($ladders) > 0) {
     echo "<div class='sidenav'>";
     foreach ($ladders as $l) {
