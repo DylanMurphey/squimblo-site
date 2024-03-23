@@ -13,7 +13,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     </head>
 <body>
-    <?php session_start(); ?>
+    <?php if(!isset($_SESSION)) session_start(); ?>
+    <div id="nav">
     <ul class="nav">
         <a href="/" class="no-decoration"><img src="logo.svg" height="50px" class="logo"> <div class="wordmark">Squimblo!</div></a>
         <li id="button"><a href="/index.php">Home</a></li>
@@ -30,4 +31,6 @@
         }
         ?>
     </ul>
+    </div>
+    <div id='body-container'>
 <!-- end header.php -->

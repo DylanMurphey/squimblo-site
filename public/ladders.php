@@ -1,119 +1,68 @@
 <?php 
-  $pagename = "Ladders";
-  require_once("../private/header.php") ;
-  require_once("../private/Dao.php");
-  $dao = new Dao;
-
-  $ladders = $dao->getLadders($_SESSION['user_id']);
-
-  if (count($ladders) > 0) {
-    echo "<div class='sidenav'>";
-    foreach ($ladders as $l) {
-      $title = $l['ladder_title'];
-      $id    = $l['ladder_id'];
-      echo "<a href='?view_ladder={$id}'>{$title}</a>";
-    }
-    echo "</div>";
+  function errorOut(string $h = 'Either this ladder does not exist or you do not have permission to access it.') {
+    echo "<div id='ladderspage'><h1>{$h}</h1></div>";
+    require_once("../private/footer.php");
+    exit();
   }
 
-?>
+  session_start();
+  require_once("../private/Dao.php");
+  $dao = new Dao;
+  $authenticated = isset($_SESSION['authenticated']) && $_SESSION['authenticated'];
+  $pagename = "Ladders";
 
-    <table id="ladders">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Participant</th>
-            <th>W</th>
-            <th>D</th>
-            <th>L</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Jamel Cameron</td>
-            <td>4</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Claudia Owen</td>
-            <td>4</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Julius Pearson</td>
-            <td>3</td>
-            <td>1</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Courtney Love</td>
-            <td>3</td>
-            <td>1</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Dylan</td>
-            <td>3</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Lesley Keller</td>
-            <td>2</td>
-            <td>0</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Rodney Horne</td>
-            <td>1</td>
-            <td>0</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Milan Huynh</td>
-            <td>1</td>
-            <td>0</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>Mack Ortiz</td>
-            <td>1</td>
-            <td>0</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>Giovanni Buckley</td>
-            <td>0</td>
-            <td>0</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td>Tami Curry</td>
-            <td>0</td>
-            <td>0</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>Leanne Hebert</td>
-            <td>0</td>
-            <td>0</td>
-            <td>4</td>
-          </tr>
-        </tbody>
-    </table>
+  if ($authenticated) {
+    $ladders = $dao->getLadders($_SESSION['user_id']);
+    if (isset($_GET['view_ladder'])) {
+      $view_ladder = $_GET['view_ladder'];
+    }
+    if (isset($view_ladder)) {
+      // check if in table
+      foreach($ladders as $l) {
+        if ($l['ladder_id'] == $view_ladder) {
+          $pagename = $l['ladder_title'];
+          $allowed = true;
+        }
+      }
+    }
+  }
+
+  require_once("../private/header.php") ;
+
+  if ($authenticated) {
+    if (count($ladders) > 0) {
+      echo "<div class='sidenav'>";
+      foreach ($ladders as $l) {
+        $title = $l['ladder_title'];
+        $id    = $l['ladder_id'];
+        echo "<a href='?view_ladder={$id}'>{$title}</a>";
+      }
+      echo "</div>";
+    } else if (isset($view_ladder)) {
+      errorOut();
+    } else {
+      errorOut("You're not in any ladders :(");
+    }
+
+    if (isset($view_ladder)) {
+      // check if in table
+      if ($allowed) {
+        $placements = $dao->getLadderTable($view_ladder);
+  
+        echo "<table id='ladders'><thead><tr><th>Rank</th><th>Player</th><th>W</th><th>D</th><th>L</th></tr></thead><tbody>";
+
+        foreach($placements as $p) {
+          echo "<tr><td>{$p['rank']}</td><td>{$p['username']}</td><td>{$p['wins']}</td><td>{$p['draws']}</td><td>{$p['losses']}</td></tr>";
+        }
+
+        echo "</tbody></table>";
+      } else {
+        errorOut();
+      }
+    }
+  } else {
+    errorOut('Please sign in to access your ladders.');
+  }
+?>
 
 <?php include_once("../private/footer.php") ?>

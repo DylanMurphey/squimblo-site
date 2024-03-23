@@ -102,7 +102,50 @@
                 return QueryResult::FAILED_UNKNOWN;
             }
 
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getLadderTable($ladder_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT 
+                                    users.username      AS username,
+                                    placements.rank     AS rank,
+                                    placements.wins     AS wins,
+                                    placements.draws    AS draws,
+                                    placements.losses   AS losses,
+                                    placements.points   AS points
+                                FROM   placements
+                                    LEFT JOIN users
+                                        ON placements.player = users.id
+                                WHERE  placements.ladder = :ladder_id
+                                ORDER BY placements.rank ASC");
+
+            $q->bindParam(":ladder_id", $ladder_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
             $q->execute();
             return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function checkUserInTable ($user_id, $ladder_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT * FROM placements
+                                WHERE   player = :user_id
+                                AND     ladder = :ladder_id");
+
+            $q->bindParam(":user_id",   $user_id);
+            $q->bindParam(":ladder_id", $ladder_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $r = $q->fetch();
+            return !empty($r);
         }
     }
