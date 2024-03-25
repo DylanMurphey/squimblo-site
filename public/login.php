@@ -1,7 +1,6 @@
 <?php
     $pagename = "Sign In";
     require_once("../private/header.php");
-    require_once("../private/Dao.php");
     require_once("../private/load_env.php");
 
     // kick users back who sneakily revisit login page
