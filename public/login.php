@@ -2,11 +2,12 @@
     $pagename = "Sign In";
     require_once("../private/header.php");
     require_once("../private/Dao.php");
-    $dao = new Dao("comments.log");
+    require_once("../private/load_env.php");
 
     // kick users back who sneakily revisit login page
     if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
-        header("Location: {$THIS_DOMAIN}/index.php");
+        $d = getenv('THIS_DOMAIN');
+        header("Location: {$d}/index.php");
         exit();
     }
 ?>
