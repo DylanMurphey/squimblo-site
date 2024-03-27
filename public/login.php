@@ -11,9 +11,6 @@
     }
 ?>
 
-<?php echo print_r($_SESSION); //TODO: remove :)
-?> 
-
 <div class="login-wrapper">
     <div class="login-container" id="login-field">
         <form method="post" action="login_handler.php">
