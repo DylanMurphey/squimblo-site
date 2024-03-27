@@ -20,6 +20,14 @@
             exit();
         }
 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            unset($_SESSION['reg_email']);
+            $_SESSION['prefill'] = $prefill;
+            $_SESSION['warning']['reg'] = 'Please enter a valid email';
+            header("Location: {$THIS_DOMAIN}/login.php");
+            exit();
+        }
+
         // submit
         $status = $dao->createUser($username,$password,$email);
         switch ($status) {
