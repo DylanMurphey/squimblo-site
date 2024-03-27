@@ -11,11 +11,16 @@
     }
 ?>
 
+<?php echo print_r($_SESSION); //TODO: remove :)
+?> 
+
 <div class="login-wrapper">
     <div class="login-container" id="login-field">
         <form method="post" action="login_handler.php">
             <label for="username"><b>Existing user</b><br /></label>
-            <input type="text" placeholder="Username" name="username" required><br />
+            <input type="text" placeholder="Username" name="username"
+                <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['login_username'])){ echo "value='{$_SESSION['prefill']['login_username']}'"; } ?>
+                required><br />
             <input type="password" placeholder="Password" name="password" required><br />
             <button type="submit" value="Login">Login</button>
         </form>
@@ -24,8 +29,12 @@
     <div class="login-container" id="signup-field">
         <form method="post" action="registration_handler.php">
             <label for="username"><b>New user</b><br /></label>
-            <input type="text" placeholder="Username" name="username" required><br />
-            <input type="text" placeholder="Email Address" name="email" required><br />
+            <input type="text" placeholder="Username" name="username"
+                <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['reg_username'])){ echo "value='{$_SESSION['prefill']['reg_username']}'"; } ?>
+                required><br />
+            <input type="text" placeholder="Email Address" name="email" 
+                <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['reg_email'])){ echo "value='{$_SESSION['prefill']['reg_email']}'"; } ?>
+                required><br />
             <input type="password" placeholder="Password" name="password" required><br />
             <input type="password" placeholder="Confirm Password" name="password_confirm" required><br />
             <button type="submit">Sign up</button>
@@ -33,4 +42,4 @@
     </div>
 </div>
 
-<?php include_once("../private/footer.php") ?>
+<?php unset($_SESSION['prefill']); include_once("../private/footer.php"); ?>

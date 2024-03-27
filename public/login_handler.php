@@ -17,6 +17,7 @@
     header("Location: {$THIS_DOMAIN}/index.php");
     exit();
   } else {
+    $_SESSION['prefill'] = ['login_username'=>$username];
     header("Location: {$THIS_DOMAIN}/login.php");
     exit();
   }
