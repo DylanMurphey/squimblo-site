@@ -18,6 +18,7 @@
     exit();
   } else {
     $_SESSION['prefill'] = ['login_username'=>$username];
+    $_SESSION['warning']['login'] = 'Username or password incorrect';
     header("Location: {$THIS_DOMAIN}/login.php");
     exit();
   }

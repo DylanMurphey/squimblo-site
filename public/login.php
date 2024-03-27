@@ -18,6 +18,11 @@
     <div class="login-container" id="login-field">
         <form method="post" action="login_handler.php">
             <label for="username"><b>Existing user</b><br /></label>
+            <?php
+                if(isset($_SESSION['warning']) && isset($_SESSION['warning']['login'])){
+                    echo "<p class='warning'>{$_SESSION['warning']['login']}</p>";
+                }
+            ?>
             <input type="text" placeholder="Username" name="username"
                 <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['login_username'])){ echo "value='{$_SESSION['prefill']['login_username']}'"; } ?>
                 required><br />
@@ -29,6 +34,11 @@
     <div class="login-container" id="signup-field">
         <form method="post" action="registration_handler.php">
             <label for="username"><b>New user</b><br /></label>
+            <?php
+                if(isset($_SESSION['warning']) && isset($_SESSION['warning']['reg'])){
+                    echo "<p class='warning'>{$_SESSION['warning']['reg']}</p>";
+                }
+            ?>
             <input type="text" placeholder="Username" name="username"
                 <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['reg_username'])){ echo "value='{$_SESSION['prefill']['reg_username']}'"; } ?>
                 required><br />
@@ -42,4 +52,8 @@
     </div>
 </div>
 
-<?php unset($_SESSION['prefill']); include_once("../private/footer.php"); ?>
+<?php 
+    unset($_SESSION['prefill']);
+    unset($_SESSION['warning']);
+    include_once("../private/footer.php");
+?>

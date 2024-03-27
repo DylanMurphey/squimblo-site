@@ -30,6 +30,10 @@ img.logo {
     float:inline-start;
 }
 
+.warning {
+    color:red;
+}
+
 .wordmark {
     font-size: 2rem;
     display: inline;
