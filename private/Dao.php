@@ -145,7 +145,8 @@
                 return QueryResult::FAILED_UNKNOWN;
             }
 
-            $r = $q->fetch();
+            $r = $q->fetchAll();
+
             return !empty($r);
         }
 

@@ -24,6 +24,8 @@
             require_once('../private/Dao.php');
             $username = $_SESSION['username'];
             $dao = new Dao();
+            $numInvitesStr = '';
+            $numMatchesStr = '';
             if ($numInvites = $dao->numInvites($_SESSION['user_id']))
                 $numInvitesStr = " ({$numInvites})";
 
