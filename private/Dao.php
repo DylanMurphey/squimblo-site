@@ -260,4 +260,55 @@
 
             return $q->execute();
         }
+
+        public function createMatch($player1, $player2, $ladder_id, $round) {
+            $conn = $this->getConnection();
+    
+            $q = $conn->prepare('INSERT INTO matches (player1, player2, ladder, round)
+                                VALUES (:player1, :player2, :ladder_id, :round)');
+
+            echo $player1;
+
+            $q->bindParam(':player1',$player1);
+            $q->bindParam(':player2',$player2);
+            $q->bindParam(':ladder_id',$ladder_id);
+            $q->bindParam(':round',$round);
+
+            return $q->execute();
+        }
+
+        /**
+         * Returns array:
+         *  ['player1_name',
+         *   'player2_name',
+         *   'ladder_name',
+         *   'match_id']
+         */
+        public function getMatches($user_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT 
+                                    player1.username    AS player1_name,
+                                    player2.username    AS player2_name,
+                                    ladders.title       AS ladder_name,
+                                    matches.id          AS match_id
+                                FROM matches
+                                    JOIN users AS player1
+                                        ON matches.player1 = player1.id
+                                    JOIN users AS player2
+                                        ON matches.player2 = player2.id
+                                    JOIN ladders
+                                        ON matches.ladder = ladders.id
+                                WHERE   matches.player1 = :user_id
+                                OR      matches.player2 = :user_id");
+
+            $q->bindParam(":user_id", $user_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $q->execute();
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
