@@ -149,6 +149,25 @@
             return !empty($r);
         }
 
+        public function addUserToLadder ($user_id, $ladder_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT * FROM placements
+                                WHERE   ladder = :ladder_id");
+            $q->bindParam(":ladder_id", $ladder_id);
+            if(!$q->execute())
+                return false;
+            $rank = count($q->fetchAll()) + 1;
+
+            $q = $conn->prepare('INSERT INTO placements (player, ladder, rank)
+                                 VALUES (:user_id, :ladder_id, :rank)');
+            $q->bindParam(":ladder_id", $ladder_id);
+            $q->bindParam(":user_id", $user_id);
+            $q->bindParam(":rank", $rank);
+
+            return $q->execute();
+        }
+
         public function numInvites ($user_id) {
             $conn = $this->getConnection();
 
@@ -156,7 +175,6 @@
                                  WHERE    recipient_id = :user_id');
 
             $q->bindParam(":user_id", $user_id);
-            
             if(!$q->execute()) {
                 return QueryResult::FAILED_UNKNOWN;
             }
@@ -164,5 +182,81 @@
             $r = $q->fetchAll(PDO::FETCH_ASSOC);
 
             return count($r);
+        }
+
+        public function numMatches ($user_id) {
+            // $conn = $this->getConnection();
+
+            // $q = $conn->prepare('SELECT * FROM invites
+            //                      WHERE    recipient_id = :user_id');
+
+            // $q->bindParam(":user_id", $user_id);
+            // if(!$q->execute()) {
+            //     return QueryResult::FAILED_UNKNOWN;
+            // }
+
+            // $r = $q->fetchAll(PDO::FETCH_ASSOC);
+
+            // return count($r);
+
+            return $user_id;
+        }
+
+        /**
+         * Returns array:
+         *  ['sender_name',
+         *   'ladder_name',
+         *   'invite_id']
+         */
+        public function getInvites($recipient_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT 
+                                    sender.username     AS sender_name,
+                                    ladders.title       AS ladder_name,
+                                    invites.id          AS invite_id
+                                FROM invites
+                                    JOIN users AS sender
+                                        ON invites.sender_id = sender.id
+                                    JOIN ladders
+                                        ON invites.ladder = ladders.id
+                                WHERE invites.recipient_id = :recipient_id");
+
+            $q->bindParam(":recipient_id", $recipient_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $q->execute();
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getInvite($invite_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT sender_id,
+                                        recipient_id,
+                                        ladder AS ladder_id 
+                                FROM invites WHERE id = :invite_id");
+
+            $q->bindParam(":invite_id", $invite_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $q->execute();
+            return $q->fetch();
+        }
+
+        public function deleteInvite($invite_id) {
+            $conn = $this->getConnection();
+    
+            $q = $conn->prepare('DELETE FROM invites WHERE id = :invite_id');
+
+            $q->bindParam(":invite_id", $invite_id);
+
+            return $q->execute();
         }
     }

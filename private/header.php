@@ -24,10 +24,14 @@
             require_once('../private/Dao.php');
             $username = $_SESSION['username'];
             $dao = new Dao();
-            $numInvites = $dao->numInvites($_SESSION['user_id']);
+            if ($numInvites = $dao->numInvites($_SESSION['user_id']))
+                $numInvitesStr = " ({$numInvites})";
+
+            if ($numMatches = $dao->numMatches($_SESSION['user_id']))
+                $numMatchesStr = " ({$numMatches})";
             echo "<li id='button'><a href='/ladders.php'>Ladders</a></li>";
-            echo "<li id='button'><a href='/matches.php'>Matches</a></li>";
-            echo "<li id='button'><a href='/invites.php'>Invites ({$numInvites})</a></li>";
+            echo "<li id='button'><a href='/matches.php'>Matches{$numMatchesStr}</a></li>";
+            echo "<li id='button'><a href='/invites.php'>Invites{$numInvitesStr}</a></li>";
             echo "<li id='button'><a href='/logout.php'>Sign out as <b>{$username}</b></a></li>";
         } else {
             echo "<li id='button'><a href='/login.php'>Sign in</a></li>";

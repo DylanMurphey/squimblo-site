@@ -8,21 +8,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Scotty</td>
-      <td>Scooter's Pingpong</td>
-      <td><a href="http://google.com/">Accept</a></td>
-    </tr>
-    <tr>
-      <td>Fiona</td>
-      <td>Dylan's Brawlhalla</td>
-      <td><a href="http://google.com/">Accept</a></td>
-    </tr>
-    <tr>
-      <td>Pablo</td>
-      <td>Pingu's Mancala</td>
-      <td><a href="http://google.com/">Accept</a></td>
-    </tr>
+    <?php
+        $dao = new Dao();
+        $invites = $dao->getInvites($_SESSION['user_id']);
+
+        foreach ($invites as $i) {
+            echo "<tr><td>{$i['sender_name']}</td><td>{$i['ladder_name']}</td><td><a href='/invite_handler.php?id={$i['invite_id']}'>Accept</a></td><td><a href='/invite_handler.php?id={$i['invite_id']}&reject=true'>Reject</a></td></tr>";
+        }
+    ?>
   </tbody>
 </table>
 
