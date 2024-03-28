@@ -11,19 +11,33 @@
     $password_confirm = $_POST['password_confirm'];
     $prefill = ['reg_username'=>$username, 'reg_email'=>$email];
 
+    function updateWarning ($which, $s) {
+        if(isset($_SESSION['warning']['reg'])) {
+            $_SESSION['warning'][$which] = $_SESSION['warning']['reg']."<br/><br/>".$s;
+        } else {
+            $_SESSION['warning'][$which] = $s;
+        }
+    }
+
     if ($username && $password && $email && $password_confirm) {
         // sanitize
+        if (!(preg_match('/^[a-z0-9_]{3,16}$/', $username))) {
+            updateWarning('reg', 'Username must be 3-16 characters<br/>(a-Z, 0-9, _ )');
+        }
+
         if ($password !== $password_confirm || !(strlen($password) >= 6 && strlen($password) <= 32)) {
-            $_SESSION['prefill'] = $prefill;
-            $_SESSION['warning']['reg'] = 'Passwords must be 6-32 characters and must match';
+            updateWarning('reg', 'Password must be 6-32 characters and must match');
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            unset($prefill['reg_email']);
+            updateWarning('reg', 'Please enter a valid email');
             header("Location: {$THIS_DOMAIN}/login.php");
             exit();
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            unset($_SESSION['reg_email']);
+        if(isset($_SESSION['warning']['reg'])) {
             $_SESSION['prefill'] = $prefill;
-            $_SESSION['warning']['reg'] = 'Please enter a valid email';
             header("Location: {$THIS_DOMAIN}/login.php");
             exit();
         }
