@@ -148,4 +148,21 @@
             $r = $q->fetch();
             return !empty($r);
         }
+
+        public function numInvites ($user_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare('SELECT * FROM invites
+                                 WHERE    recipient = :user_id');
+
+            $q->bindParam(":user_id", $user_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $r = $q->fetchAll(PDO::FETCH_ASSOC);
+
+            return count($r);
+        }
     }
