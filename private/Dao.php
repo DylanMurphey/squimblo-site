@@ -153,7 +153,7 @@
             $conn = $this->getConnection();
 
             $q = $conn->prepare('SELECT * FROM invites
-                                 WHERE    recipient = :user_id');
+                                 WHERE    recipient_id = :user_id');
 
             $q->bindParam(":user_id", $user_id);
             
