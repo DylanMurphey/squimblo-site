@@ -1,6 +1,4 @@
-<?php $pagename = "Invites"; include_once("../private/header.php"); ?>
-
-<?php
+<?php $pagename = "Invites"; include_once("../private/header.php"); 
     if (!isset($_SESSION['authenticated'])) {
       header ('Location: /login.php');
     }
@@ -16,6 +14,5 @@
     } else {
       echo '<br/><h1>No new invites, go <a href="https://craigslist.org">make friends!</h1>';
     }
-?>
-
-<?php include_once("../private/footer.php");?>
+    
+    include_once("../private/footer.php");?>
