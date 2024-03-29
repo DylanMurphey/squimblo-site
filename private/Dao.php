@@ -90,7 +90,8 @@
 
             $q = $conn->prepare("SELECT 
                                     ladders.title AS ladder_title,
-                                    ladders.id    AS ladder_id
+                                    ladders.id    AS ladder_id,
+                                    ladders.current_round AS ladder_round
                                  FROM     placements
                                      JOIN ladders
                                          ON placements.ladder = ladders.id

@@ -21,7 +21,7 @@
       foreach($ladders as $l) {
         if ($l['ladder_id'] == $view_ladder) {
           $pagename = $l['ladder_title'];
-          $allowed = true;
+          $ladder_info = $l;
         }
       }
     }
@@ -45,9 +45,15 @@
     }
 
     if (isset($view_ladder)) {
+      echo '<div class = "ladder-body">';
       // check if in table
-      if ($allowed) {
+      if (isset($ladder_info)) {
         $placements = $dao->getLadderTable($view_ladder);
+
+        $roundStr = ($ladder_info['ladder_round'] > 0) ? 'Round '.$ladder_info['ladder_round']
+                                                       : 'Preseason!';
+
+        echo "<h1>{$ladder_info['ladder_title']} - {$roundStr}</h1>";
   
         echo "<table id='ladders'><thead><tr><th>Rank</th><th>Player</th><th>W</th><th>D</th><th>L</th></tr></thead><tbody>";
 
@@ -56,6 +62,7 @@
         }
 
         echo "</tbody></table>";
+        echo '</div>';
       } else {
         errorOut();
       }
