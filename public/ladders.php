@@ -1,6 +1,6 @@
 <?php 
   function errorOut(string $h = 'Either this ladder does not exist or you do not have permission to access it.') {
-    echo "<div id='ladderspage'><h1>{$h}</h1></div>";
+    echo "<div id='ladderspage-header'><h1>{$h}</h1></div>";
     require_once("../private/footer.php");
     exit();
   }
@@ -42,12 +42,12 @@
     } else if (isset($view_ladder)) {
       errorOut();
     } else {
-      errorOut("You're not in any ladders :(");
+      errorOut("You're not in any ladders :(<br/><br/><a href=\"/create_ladder.php\">Click here to create one!</a>");
     }
 
     if (isset($view_ladder)) {
       // ADMIN STUFF
-      if ($_SESSION['user_id'] == $ladder_info['owner_id']) {
+      if (isset($ladder_info) && $_SESSION['user_id'] == $ladder_info['owner_id']) {
         echo "<div class='sidenav' id='right'>";
         echo "<h2>Manage Ladder</h2>";
 
@@ -87,6 +87,8 @@
       } else {
         errorOut();
       }
+    } else {
+      echo '<div class="ladders-margins"><h1>Welcome back!</h1><h2>Please select a ladder from the left or click <a class="underline" href="/create_ladder.php">here</a> to create a new one!</h2></div>';
     }
   } else {
     errorOut('Please sign in to access your ladders.');

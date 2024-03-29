@@ -104,6 +104,38 @@
             return $q->fetch();
         }
 
+        public function createLadder($owner_id, $ladder_name) {
+            $conn = $this->getConnection();
+    
+            $q = $conn->prepare('INSERT INTO ladders (owner_id, title)
+                                VALUES (:owner_id, :ladder_name)');
+
+            $q->bindParam(':owner_id',$owner_id);
+            $q->bindParam(':ladder_name',$ladder_name);
+
+            if (!$q->execute()) {
+                return false;
+            }
+
+            $q = $conn->prepare('SELECT id FROM ladders WHERE title = :ladder_name AND owner_id = :owner_id');
+            $q->bindParam(':owner_id',$owner_id);
+            $q->bindParam(':ladder_name',$ladder_name);
+            $q->execute();
+            $r = $q->fetch();
+
+            if (empty($r)) {
+                $q = $conn->prepare('DELETE FROM ladders WHERE title = :ladder_name AND owner_id = :owner_id');
+    
+                $q->bindParam(':owner_id',$owner_id);
+                $q->bindParam(':ladder_name',$ladder_name);
+
+                $q->execute();
+                return false;
+            } else {
+                return $r['id'];
+            }
+        }
+
         public function getLadders($user_id) {
             $conn = $this->getConnection();
 
@@ -144,6 +176,25 @@
             }
 
             return $q->fetch();
+        }
+
+        public function checkLadderExists ($user_id, $ladder_name) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT * FROM ladders
+                                WHERE   owner_id = :user_id
+                                AND     title    = :ladder_name");
+
+            $q->bindParam(":user_id",   $user_id);
+            $q->bindParam(":ladder_name", $ladder_name);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $r = $q->fetchAll();
+
+            return empty($r);
         }
 
         public function getLadderTable($ladder_id) {

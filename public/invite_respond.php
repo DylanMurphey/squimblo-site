@@ -12,8 +12,6 @@
 
     $dao = new Dao();
 
-    $THIS_DOMAIN = getenv("THIS_DOMAIN");
-
     if (isset($_GET['id'])){
         $invite_id = $_GET['id'];
         $accept = !(isset($_GET['reject']) && filter_var($_GET['reject'], FILTER_VALIDATE_BOOL));
