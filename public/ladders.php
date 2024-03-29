@@ -58,7 +58,7 @@
         }
 
         echo "<form method=post action='/invite_send.php' id='invite-user'>
-                <input type='text' placeholder='Invite user by username' name='recipient-username' autocomplete=off>
+                <input type='text' placeholder='Invite user by username' name='recipient-username' autocomplete=off required=true>
                 <input type='hidden' name='ladder-id' value='$view_ladder'>
                 <button type='submit'>Go</button>
               </form>";

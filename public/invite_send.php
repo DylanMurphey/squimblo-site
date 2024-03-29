@@ -17,6 +17,12 @@
         if (empty($ladder)) leave();
         if (empty($recipient)) {
             $_SESSION['warning']['invite_failed'] = 'That user does not exist';
+            leave("ladders.php?view_ladder={$ladder['id']}");
+        }
+
+        if ($dao->checkUserHasInvite($recipient['id'],$ladder['id']) || $dao->checkUserInTable($recipient['id'],$ladder['id'])) {
+            $_SESSION['warning']['invite_failed'] = 'That user has already been invited!';
+            leave("ladders.php?view_ladder={$ladder['id']}");
         }
 
         if ($_SESSION['user_id'] == $ladder['owner_id']) {
@@ -28,7 +34,7 @@
             }
         } else {
             $_SESSION['warning']['invite_failed'] = 'You do not have permission to invite users';
-            leave();
+            leave("ladders.php?view_ladder={$ladder['id']}");
         }
     } else {
         $_SESSION['warning']['invite_failed'] = 'Unknown error creating invite';

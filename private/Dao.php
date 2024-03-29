@@ -274,6 +274,24 @@
             return $q->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function checkUserHasInvite($user_id, $ladder_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT * FROM invites
+                                WHERE   (recipient_id = :user_id AND ladder = :ladder_id)");
+
+            $q->bindParam(":user_id",   $user_id);
+            $q->bindParam(":ladder_id", $ladder_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            $r = $q->fetchAll();
+
+            return !empty($r);
+        }
+
         public function createInvite($sender_id, $recipient_id, $ladder_id) {
             $conn = $this->getConnection();
     
