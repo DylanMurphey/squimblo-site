@@ -85,13 +85,33 @@
             }
         }
 
+        public function getUserByUsername ($username) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT id,
+                                        username,
+                                        display_name,
+                                        email
+                                 FROM users
+                                 WHERE username = :username;  ");
+
+            $q->bindParam(":username", $username);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            return $q->fetch();
+        }
+
         public function getLadders($user_id) {
             $conn = $this->getConnection();
 
             $q = $conn->prepare("SELECT 
                                     ladders.title AS ladder_title,
                                     ladders.id    AS ladder_id,
-                                    ladders.current_round AS ladder_round
+                                    ladders.current_round AS ladder_round,
+                                    ladders.owner_id AS owner_id
                                  FROM     placements
                                      JOIN ladders
                                          ON placements.ladder = ladders.id
@@ -104,6 +124,26 @@
             }
 
             return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getLadderMetadata($ladder_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT 
+                                    ladders.title,
+                                    ladders.id,
+                                    ladders.current_round,
+                                    ladders.owner_id
+                                 FROM ladders
+                                 WHERE  id = :ladder_id;  ");
+
+            $q->bindParam(":ladder_id", $ladder_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            return $q->fetch();
         }
 
         public function getLadderTable($ladder_id) {
@@ -234,6 +274,19 @@
             return $q->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function createInvite($sender_id, $recipient_id, $ladder_id) {
+            $conn = $this->getConnection();
+    
+            $q = $conn->prepare('INSERT INTO invites (sender_id, recipient_id, ladder)
+                                VALUES (:sender_id, :recipient_id, :ladder_id)');
+
+            $q->bindParam(':sender_id',$sender_id);
+            $q->bindParam(':recipient_id',$recipient_id);
+            $q->bindParam(':ladder_id',$ladder_id);
+
+            return $q->execute();
+        }
+
         public function getInvite($invite_id) {
             $conn = $this->getConnection();
 
@@ -267,8 +320,6 @@
     
             $q = $conn->prepare('INSERT INTO matches (player1, player2, ladder, round)
                                 VALUES (:player1, :player2, :ladder_id, :round)');
-
-            echo $player1;
 
             $q->bindParam(':player1',$player1);
             $q->bindParam(':player2',$player2);

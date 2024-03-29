@@ -8,6 +8,8 @@
         exit();
     }
 
+    if(!$_SESSION['authenticated']) leave('login.php');
+
     $dao = new Dao();
 
     $THIS_DOMAIN = getenv("THIS_DOMAIN");
