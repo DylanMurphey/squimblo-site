@@ -78,7 +78,7 @@
         $roundStr = ($ladder_info['ladder_round'] > 0) ? 'Round '.$ladder_info['ladder_round']
                                                        : 'Preseason';
 
-        echo "<h1>{$ladder_info['ladder_title']} - {$roundStr}</h1>";
+        echo "<h1 class='ladders-margins'>{$ladder_info['ladder_title']} - {$roundStr}</h1>";
         echo "<table id='ladders'><thead><tr><th>Rank</th><th>Player</th><th>W</th><th>D</th><th>L</th></tr></thead><tbody>";
 
         foreach($placements as $p) {

@@ -390,6 +390,54 @@
          *   'player1_name',
          *   'player2_name',
          *   'ladder_name',
+         *   'ladder_id',
+         *   'match_id',
+         *   'player1_id',
+         *   'player2_id',
+         *   'player1_score',
+         *   'player2_score',
+         *   'completed']
+         */
+        public function getMatchById($match_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("SELECT 
+                                    matches.id              AS match_id,
+                                    player1.username        AS player1_name,
+                                    player2.username        AS player2_name,
+                                    ladders.title           AS ladder_name,
+                                    ladders.id              AS ladder_id,
+                                    matches.id              AS match_id,
+                                    player1.id              AS player1_id,
+                                    player2.id              AS player2_id,
+                                    matches.player1_score   AS player1_score,
+                                    matches.player1_score   AS player1_score,
+                                    matches.completed       AS completed
+                                FROM matches
+                                    JOIN users AS player1
+                                        ON matches.player1 = player1.id
+                                    JOIN users AS player2
+                                        ON matches.player2 = player2.id
+                                    JOIN ladders
+                                        ON matches.ladder = ladders.id
+                                WHERE   matches.id = :match_id
+                                LIMIT   1");
+
+            $q->bindParam(":match_id", $match_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            return $q->fetch();
+        }
+
+        /**
+         * Returns array:
+         *  ['match_id',
+         *   'player1_name',
+         *   'player2_name',
+         *   'ladder_name',
          *   'match_id',
          *   'player1_id',
          *   'player2_id',
@@ -508,6 +556,8 @@
          */
         public function updatePlacement($user_id, $ladder_id, $wld, $rank) {
             $conn = $this->getConnection();
+
+            $wld = intval($wld);
 
             switch ($wld) {
                 case 0:

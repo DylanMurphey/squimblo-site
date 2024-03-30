@@ -74,7 +74,7 @@
           $_SESSION['authenticated'] = true;
           $_SESSION['username'] = $vp['username'];
           $_SESSION['user_id'] = $vp['user_id'];
-            header("Location: {$THIS_DOMAIN}/index.php");
+            header("Location: {$THIS_DOMAIN}/ladders.php");
             exit();
         } else {
             header("Location: {$THIS_DOMAIN}/login.php");
