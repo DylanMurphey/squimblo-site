@@ -200,7 +200,8 @@
         public function getLadderTable($ladder_id) {
             $conn = $this->getConnection();
 
-            $q = $conn->prepare("SELECT 
+            $q = $conn->prepare("SELECT
+                                    users.id            AS user_id,
                                     users.username      AS username,
                                     placements.rank     AS rank,
                                     placements.wins     AS wins,
@@ -393,7 +394,7 @@
          *   'player2_score',
          *   'completed']
          */
-        public function getMatches($user_id, $only_incomplete = false) {
+        public function getUserMatches($user_id, $only_incomplete = false) {
             $conn = $this->getConnection();
 
             $suffix = '';
@@ -430,7 +431,124 @@
                 return QueryResult::FAILED_UNKNOWN;
             }
 
-            $q->execute();
             return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        /**
+         * Returns array:
+         *  ['match_id',
+         *   'player1_name',
+         *   'player2_name',
+         *   'ladder_name',
+         *   'match_id',
+         *   'player1_id',
+         *   'player2_id',
+         *   'player1_score',
+         *   'player2_score',
+         *   'completed']
+         */
+        public function getLadderMatches($ladder_id) {
+            $conn = $this->getConnection();
+
+                $q = $conn->prepare("SELECT 
+                                        matches.id              AS match_id,
+                                        ladders.title           AS ladder_name,
+                                        matches.id              AS match_id,
+                                        matches.player1         AS player1_id,
+                                        matches.player2         AS player2_id,
+                                        matches.player1_score   AS player1_score,
+                                        matches.player2_score   AS player2_score,
+                                        matches.completed       AS completed,
+                                        matches.winner          AS winner
+                                    FROM matches
+                                        JOIN ladders
+                                            ON matches.ladder = ladders.id
+                                    WHERE   matches.round = ladders.current_round
+                                            AND ladders.id = :ladder_id");
+
+            $q->bindParam(":ladder_id", $ladder_id);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function updateMatch($match_id, $p1_score, $p2_score, $winner) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("UPDATE 
+                                    matches
+                                SET
+                                    completed     = true,
+                                    player1_score = :p1_score,
+                                    player2_score = :p2_score,
+                                    winner        = :winner
+                                WHERE
+                                    id            = :match_id");
+
+            $q->bindParam(":match_id", $match_id);
+            $q->bindParam(":p1_score", $p1_score);
+            $q->bindParam(":p2_score", $p2_score);
+            $q->bindParam(":winner", $winner);
+            
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        /**
+         * wld is an integer set to: 0->win, 1->loss, 2->draw
+         */
+        public function updatePlacement($user_id, $ladder_id, $wld, $rank) {
+            $conn = $this->getConnection();
+
+            switch ($wld) {
+                case 0:
+                    $wldStr = 'wins';
+                    break;
+                case 1:
+                    $wldStr = 'losses';
+                    break;
+                default:
+                    $wldStr = 'draws';
+            }
+
+            $q = $conn->prepare("UPDATE 
+                                    placements
+                                SET
+                                    {$wldStr}   = {$wldStr} + 1,
+                                    rank        = :rank
+                                WHERE
+                                        player  = :user_id
+                                    AND ladder  = :ladder_id");
+
+            $q->bindParam(":user_id", $user_id);
+            $q->bindParam(":ladder_id", $ladder_id);
+            $q->bindParam(":rank", $rank);
+
+            if(!$q->execute()) {
+                return QueryResult::FAILED_UNKNOWN;
+            }
+
+            return $q->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function incrementLadderRound($ladder_id) {
+            $conn = $this->getConnection();
+
+            $q = $conn->prepare("UPDATE 
+                                    ladders
+                                SET
+                                    current_round = current_round + 1
+                                WHERE
+                                        id = :ladder_id");
+
+            $q->bindParam(":ladder_id", $ladder_id);
+
+            return $q->execute();
         }
     }

@@ -10,7 +10,7 @@
         <!-- Google font stuff so we can use Comic Neue as a fallback-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     </head>
 <body>
     <?php if(!isset($_SESSION)) session_start(); ?>
@@ -29,7 +29,7 @@
             if ($numInvites = $dao->numInvites($_SESSION['user_id']))
                 $numInvitesStr = " ({$numInvites})";
 
-            $matches = $dao->getMatches($_SESSION['user_id'], true);
+            $matches = $dao->getUserMatches($_SESSION['user_id'], true);
             if ($numMatches = count($matches))
                 $numMatchesStr = " ({$numMatches})";
             echo "<li id='button'><a href='/ladders.php'>Ladders</a></li>";

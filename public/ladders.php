@@ -63,7 +63,9 @@
                 <button type='submit'>Go</button>
               </form>";
 
-        echo "<form method=post action='/advance_round.php' id='advance-round'><input type='hidden' name='ladder_id' value='$view_ladder'>
+        echo "<form method=post action='/advance_round.php' id='advance-round'>
+        <input type='hidden' name='ladder-id' value='$view_ladder'>
+        <input type='hidden' name='ladder-round' value='{$ladder_info['ladder_round']}'>
         <button type='submit'>Start next round</button></form>";
         echo "</div>";
       }

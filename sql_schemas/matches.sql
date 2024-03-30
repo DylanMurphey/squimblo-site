@@ -6,5 +6,6 @@ CREATE TABLE matches (
     round           INT     NOT NULL,
     completed       BOOLEAN DEFAULT false,
     player1_score   INT,
-    player2_score   INT
+    player2_score   INT,
+    winner          INT
 );

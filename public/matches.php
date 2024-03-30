@@ -3,6 +3,10 @@
 // NOTE: $matches is defined by header. declaration should go here with the
 //       typical $dao call if that should change. One less DB query for now
 
+if (!isset($_SESSION['authenticated'])) {
+  header ('Location: /login.php');
+}
+
 if ($numMatches) {
   echo '<table id="matches"><thead><tr><th>Ladder</th><th>Opponent</th><th></th></tr></thead><tbody>';
   foreach($matches as $m) {
