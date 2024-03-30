@@ -277,24 +277,6 @@
             return count($r);
         }
 
-        public function numMatches ($user_id) {
-            // $conn = $this->getConnection();
-
-            // $q = $conn->prepare('SELECT * FROM invites
-            //                      WHERE    recipient_id = :user_id');
-
-            // $q->bindParam(":user_id", $user_id);
-            // if(!$q->execute()) {
-            //     return QueryResult::FAILED_UNKNOWN;
-            // }
-
-            // $r = $q->fetchAll(PDO::FETCH_ASSOC);
-
-            // return count($r);
-
-            return $user_id;
-        }
-
         /**
          * Returns array:
          *  ['sender_name',
@@ -400,19 +382,37 @@
 
         /**
          * Returns array:
-         *  ['player1_name',
+         *  ['match_id',
+         *   'player1_name',
          *   'player2_name',
          *   'ladder_name',
-         *   'match_id']
+         *   'match_id',
+         *   'player1_id',
+         *   'player2_id',
+         *   'player1_score',
+         *   'player2_score',
+         *   'completed']
          */
-        public function getMatches($user_id) {
+        public function getMatches($user_id, $only_incomplete = false) {
             $conn = $this->getConnection();
 
+            $suffix = '';
+
+            if ($only_incomplete) {
+                $suffix = 'AND matches.completed = false';
+            }
+
             $q = $conn->prepare("SELECT 
-                                    player1.username    AS player1_name,
-                                    player2.username    AS player2_name,
-                                    ladders.title       AS ladder_name,
-                                    matches.id          AS match_id
+                                    matches.id              AS match_id,
+                                    player1.username        AS player1_name,
+                                    player2.username        AS player2_name,
+                                    ladders.title           AS ladder_name,
+                                    matches.id              AS match_id,
+                                    player1.id              AS player1_id,
+                                    player2.id              AS player2_id,
+                                    matches.player1_score   AS player1_score,
+                                    matches.player1_score   AS player1_score,
+                                    matches.completed       AS completed
                                 FROM matches
                                     JOIN users AS player1
                                         ON matches.player1 = player1.id
@@ -420,8 +420,9 @@
                                         ON matches.player2 = player2.id
                                     JOIN ladders
                                         ON matches.ladder = ladders.id
-                                WHERE   matches.player1 = :user_id
-                                OR      matches.player2 = :user_id");
+                                WHERE   (matches.player1 = :user_id
+                                        OR  matches.player2 = :user_id)
+                                {$suffix}");
 
             $q->bindParam(":user_id", $user_id);
             

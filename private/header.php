@@ -29,7 +29,8 @@
             if ($numInvites = $dao->numInvites($_SESSION['user_id']))
                 $numInvitesStr = " ({$numInvites})";
 
-            if ($numMatches = $dao->numMatches($_SESSION['user_id']))
+            $matches = $dao->getMatches($_SESSION['user_id'], true);
+            if ($numMatches = count($matches))
                 $numMatchesStr = " ({$numMatches})";
             echo "<li id='button'><a href='/ladders.php'>Ladders</a></li>";
             echo "<li id='button'><a href='/matches.php'>Matches{$numMatchesStr}</a></li>";
