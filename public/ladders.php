@@ -95,9 +95,7 @@
   } else {
     errorOut('Please sign in to access your ladders.');
   }
-?>
 
-<?php 
-unset($_SESSION['warning']);
-include_once("../private/footer.php") 
+  unset($_SESSION['warning']);
+  include_once("../private/footer.php") 
 ?>
