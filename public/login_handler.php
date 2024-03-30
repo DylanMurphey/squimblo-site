@@ -7,13 +7,18 @@
 
   $username = $_POST['username'];
   $password = $_POST['password'];
+
+  $vp = $dao->verifyPassword($username, $password);
    
-  if ($dao->verifyPassword($username, $password)) {
+  if ($vp['correct']) {
     $_SESSION['authenticated'] = true;
-    $_SESSION['username'] = $username;
+    $_SESSION['username'] = $vp['username'];
+    $_SESSION['user_id'] = $vp['user_id'];
     header("Location: {$THIS_DOMAIN}/index.php");
     exit();
   } else {
+    $_SESSION['prefill'] = ['login_username'=>$username];
+    $_SESSION['warning']['login'] = 'Username or password incorrect';
     header("Location: {$THIS_DOMAIN}/login.php");
     exit();
   }

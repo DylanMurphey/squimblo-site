@@ -1,7 +1,7 @@
 body {
     background-color: #393646;
     color: #F4EEE0;
-    font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', sans-serif;
+    font-family: 'Lato', 'Comic Sans MS', 'Comic Sans', sans-serif;
     font-size:1.25rem;
 }
 
@@ -10,8 +10,12 @@ p, h1 {
     margin-right: 20%;
 }
 
-h1 {
+h1,h2 {
     text-align: center;
+}
+
+h2 {
+    margin: 0 0 10px 0;
 }
 
 a {
@@ -28,6 +32,16 @@ ul.nav {
 
 img.logo {
     float:inline-start;
+}
+
+.warning {
+    text-align: center;
+    color:red;
+}
+
+.celebration {
+    text-align: center;
+    color:greenyellow;
 }
 
 .wordmark {
@@ -55,12 +69,32 @@ ul.nav>li#button>a {
     padding: 10px 20px;
 }
 
-.copyright-footer {
+.copyright-footer, .push {
+    flex:1;
+    min-height: 40px;
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     text-align: center; 
+}
+
+#ladderspage-header {
+    padding-left: 5%;
+}
+
+#ladderspage-header a {
+    color:#F4EEE0;
+    text-decoration: underline;
+}
+
+a.underline {
+    text-decoration: underline;
+}
+
+.ladders-margins {
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 /* tables */
@@ -77,6 +111,25 @@ th, td {
 
 table#ladders {
     margin-left: 25%;
+}
+
+
+.new-ladder-form {
+    border: 1px solid;
+    width: 40%;
+    margin:auto;
+}
+
+.new-ladder-form form input {
+    font-size: medium;
+}
+
+.new-ladder-form form button {
+    font-size: medium;
+}
+
+.new-ladder-form p.warning {
+    font-size: medium;
 }
 
 /* login stuff */
@@ -97,17 +150,25 @@ table#ladders {
 
  /* sidebar menu - borrowed from https://www.w3schools.com/howto/howto_css_fixed_sidebar.asp */
  .sidenav {
-    height: 100%; /* Full-height: remove this if you want "auto" height */
     width: 20%; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
+    position: absolute; /* Fixed Sidebar */
     top: 100; /* Stay at the top */
-    left: 0;
     background-color: #2b252f;
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
-    margin-right: 5%;
+}
+
+.sidenav#left {
     text-align: right;
+    left: 0;
+    padding: 20px 10px 20px 0;
+    margin-right: 5%;
+  }
+
+  .sidenav#right {
+    text-align: left;
+    right: 0;
+    padding: 20px 10px 20px 0;
+    margin-left: 5%;
   }
   
   /* The navigation menu links */
@@ -129,3 +190,23 @@ table#ladders {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
   } 
+
+
+form#invite-user {
+    padding: 0 0 0 10%;
+}
+form#invite-user input {
+    font-size:medium;
+    width: 70%;
+}
+form#invite-user button {
+    font-size:medium;
+    width: 10%;
+}
+
+form#advance-round button {
+    margin: 15px auto 0 10%;
+    width: 80%;
+    height: 50px;
+    font-size:large;
+}
