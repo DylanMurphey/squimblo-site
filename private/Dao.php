@@ -33,6 +33,7 @@
          * If not, returns ['correct'=>false]
          */
         public function verifyPassword($username, $password) {
+            $username = strtolower($username);
             $conn = $this->getConnection();
             $result = $conn->query("SELECT passhash, id, username FROM users WHERE username = '$username' LIMIT 1;")->fetch();
             if ($result) {
@@ -54,6 +55,7 @@
          *  QueryResult::FAILED_USER_NOT_UNIQUE on bad user
          */
         public function createUser($username, $password, $email) {
+            $username = strtolower($username);
             $conn = $this->getConnection();
             $name_check = $conn->query("SELECT * FROM users WHERE username = '$username' LIMIT 1;")->fetch();
 
@@ -86,6 +88,7 @@
         }
 
         public function getUserByUsername ($username) {
+            $username = strtolower($username);
             $conn = $this->getConnection();
 
             $q = $conn->prepare("SELECT id,
