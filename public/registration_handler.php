@@ -22,7 +22,7 @@
     if ($username && $password && $email && $password_confirm) {
         // sanitize
         if (!(preg_match('/^[a-z0-9_]{3,16}$/', $username))) {
-            updateWarning('reg', 'Username must be 3-16 characters<br/>(a-Z, 0-9, _ )');
+            updateWarning('reg', 'Username must be 3-16 characters<br/>(a-z, 0-9, _ )');
         }
 
         if ($password !== $password_confirm || !(strlen($password) >= 6 && strlen($password) <= 32)) {
