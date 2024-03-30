@@ -18,7 +18,14 @@ if ($numMatches) {
     echo "<tr>
           <td>{$m['ladder_name']}</td>
           <td>{$opp}</td>
-          <td><a href='http://google.com/'>Report Score</a></td>
+          <td>";
+    
+    echo "<form method='get' action='report_score.php'>
+            <input type='hidden' name='match_id' value = '{$m['match_id']}' />
+            <button type='submit' value='Login'>Report Score</button>
+          </form>";
+    
+    echo  "</td>
           </tr>";
   }
   echo '</tbody></table>';

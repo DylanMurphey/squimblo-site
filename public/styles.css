@@ -5,7 +5,7 @@ body {
     font-size:1.25rem;
 }
 
-p, h1 {
+p, #body-container>h1 {
     margin-left: 20%;
     margin-right: 20%;
 }
@@ -95,6 +95,8 @@ a.underline {
 .ladders-margins {
     margin-left: 25%;
     margin-right: 25%;
+    text-wrap:wrap;
+    word-wrap:break-word;
 }
 
 /* tables */
@@ -118,18 +120,46 @@ table#ladders {
     border: 1px solid;
     width: 40%;
     margin:auto;
+    position: relative;
+  
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    row-gap: 10px;
 }
 
-.new-ladder-form form input {
+.new-ladder-form form input, .new-ladder-form button, .new-ladder-form p.warning {
     font-size: medium;
 }
 
-.new-ladder-form form button {
+.new-ladder-form label {
+    width: 20%;
+    display: inline-block;
+}
+
+.new-ladder-form input {
+    width:80%;
+}
+
+.report-score-form {
+    border: 1px solid;
+    width: 60%;
+    margin:auto;
+}
+
+.report-score-form form input, button {
+    font-size: large;
+    width: auto;
+}
+
+.report-score-form p.warning {
     font-size: medium;
 }
 
-.new-ladder-form p.warning {
-    font-size: medium;
+.report-score-form label {
+    width: 20%;
+    text-align: right;
+    margin-right: 10px;
 }
 
 /* login stuff */
