@@ -135,7 +135,6 @@ table#ladders {
 }
 
 .new-ladder-form form input, .new-ladder-form button, .new-ladder-form p.warning {
-.new-ladder-form form input, .new-ladder-form button, .new-ladder-form p.warning {
     font-size: medium;
 }
 
