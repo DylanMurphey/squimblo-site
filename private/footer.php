@@ -1,7 +1,7 @@
 <!-- begin footer.php -->
 </div>
 <div class="copyright-footer">
-    <p>&copy; Squimblo Developer 2024</p>
+    <p>&copy; Dylan Murphey 2024</p>
 </div>
 </body>
 
