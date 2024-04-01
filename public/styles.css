@@ -126,8 +126,15 @@ table#ladders {
     flex-flow: column wrap;
     align-items: center;
     row-gap: 10px;
+    position: relative;
+  
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    row-gap: 10px;
 }
 
+.new-ladder-form form input, .new-ladder-form button, .new-ladder-form p.warning {
 .new-ladder-form form input, .new-ladder-form button, .new-ladder-form p.warning {
     font-size: medium;
 }
