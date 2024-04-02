@@ -17,7 +17,7 @@
     <div id="nav">
     <ul class="nav">
         <a href="/" class="no-decoration"><img src="logo.svg" height="50px" class="logo"> <div class="wordmark">Squimblo!</div></a>
-        <li id="button"><a href="/about.php">About</a></li>
+        <li id="button"><a href="/index.php">Home</a></li>
 
         <?php
         if(isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
