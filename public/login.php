@@ -6,7 +6,7 @@
     // kick users back who sneakily revisit login page
     if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
         $d = getenv('THIS_DOMAIN');
-        header("Location: {$d}/index.php");
+        header("Location: {$d}/ladders.php");
         exit();
     }
 ?>
