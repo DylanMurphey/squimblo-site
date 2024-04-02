@@ -30,7 +30,7 @@ if ($numMatches) {
   }
   echo '</tbody></table>';
 } else {
-  echo '<h1>All caught up for now!</h1>';
+  echo '<br/><h1>All caught up for now!</h1>';
 }
 
 include_once("../private/footer.php");?>
