@@ -14,36 +14,42 @@
 <div class="login-wrapper">
     <div class="login-container" id="signup-field">
         <form method="post" action="registration_handler.php">
-            <label for="username"><b>New user</b><br /></label>
+            <b>New user</b><br />
             <?php
                 if(isset($_SESSION['warning']) && isset($_SESSION['warning']['reg'])){
                     echo "<p class='warning'>{$_SESSION['warning']['reg']}</p>";
                 }
             ?>
-            <input type="text" placeholder="Username" name="username"
+            <label for="regun">Username</label>
+            <input type="text" placeholder="Username" name="username" id="regun"
                 <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['reg_username'])){ echo "value='{$_SESSION['prefill']['reg_username']}'"; } ?>
                 required><br />
-            <input type="text" placeholder="Email Address" name="email" 
+            <label for="regem">Email</label>
+            <input type="text" placeholder="Email Address" name="email" id="regem"
                 <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['reg_email'])){ echo "value='{$_SESSION['prefill']['reg_email']}'"; } ?>
                 required><br />
-            <input type="password" placeholder="Password" name="password" required><br />
-            <input type="password" placeholder="Confirm Password" name="password_confirm" required><br />
+            <label for="regpw">Password</label>
+            <input type="password" placeholder="Password" name="password" id="regpw" required><br />
+            <label for="conpw">Confirm Password</label>
+            <input type="password" placeholder="Confirm Password" name="password_confirm" id="conpw" required><br />
             <button type="submit">Sign up</button>
         </form>
     </div>
     
     <div class="login-container" id="login-field">
         <form method="post" action="login_handler.php">
-            <label for="username"><b>Existing user</b><br /></label>
+            <b>Existing user</b><br />
+            <label for="un">Username</label>
             <?php
                 if(isset($_SESSION['warning']) && isset($_SESSION['warning']['login'])){
                     echo "<p class='warning'>{$_SESSION['warning']['login']}</p>";
                 }
             ?>
-            <input type="text" placeholder="Username" name="username"
+            <input type="text" placeholder="Username" name="username" id="un"
                 <?php if(isset($_SESSION['prefill']) && isset($_SESSION['prefill']['login_username'])){ echo "value='{$_SESSION['prefill']['login_username']}'"; } ?>
                 required><br />
-            <input type="password" placeholder="Password" name="password" required><br />
+            <label for="pw">Password</label>
+            <input type="password" placeholder="Password" name="password" id="pw" required><br />
             <button type="submit" value="Login">Login</button>
         </form>
     </div>
