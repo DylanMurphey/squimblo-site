@@ -179,6 +179,12 @@ table#ladders {
     text-align: center;
 }
 
+.login-container>form>label {
+	width: 200px;
+	display: inline-block;
+	text-align: right;
+	padding-right: 15px;
+}
 
  /* sidebar menu - borrowed from https://www.w3schools.com/howto/howto_css_fixed_sidebar.asp */
  .sidenav {
