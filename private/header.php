@@ -43,4 +43,11 @@
     </ul>
     </div>
     <div id='body-container'>
+
+    <?php 
+        if (isset($_GET['confetti']) && filter_var($_GET['confetti'], FILTER_VALIDATE_BOOL)) {
+            echo "<script src='/jquery-3.7.1.min.js'></script>";
+            echo "<script src='/confetti.js'></script>";
+        }
+    ?>
 <!-- end header.php -->
