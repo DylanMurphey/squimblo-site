@@ -5,6 +5,12 @@ body {
     font-size:1.25rem;
 }
 
+canvas {
+    position:absolute;
+    top:0;
+    width:99%;
+}
+
 p, #body-container>h1, #body-container>ol, #body-container>ul {
     margin-left: 20%;
     margin-right: 20%;

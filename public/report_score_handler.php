@@ -67,5 +67,5 @@
 
         $dao->updateMatch($m['match_id'], $p1s, $p2s, $winner);
     }
-    header ("Location: /ladders.php?view_ladder={$m['ladder_id']}");
+    header ("Location: /ladders.php?view_ladder={$m['ladder_id']}&confetti=true");
     exit();
