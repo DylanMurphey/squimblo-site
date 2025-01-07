@@ -16,13 +16,15 @@
 <li>Start the next round. Unreported games will be recorded as a 0-0 draw.</li>
 <li>See 5!</li>
 </ol>
-<h2>Coming Soon</h2>
+<h2>Coming Soon: Squimblo 2!</h2>
 <ul>
-<li>UI overhaul (using <a href="https://getbootstrap.com/">Bootstrap</a> or similar)</li>
+<li>Top to bottom rewrite of Squimblo, hosted on a new service that will burn less of a hole in my pockets :(</li>
+<li>Your ladders will remain in tact! Promise!</li>
+<li>UI overhaul</li>
 <li>General quality of life improvements<ul>
 <li>Optional display names</li>
 <li>Matches list within ladder screen</li>
-<li>Delete options for your account, your ladders, and for kicking members within your ladders.</li>
+<li>And more! I have a bunch of things on my own personal wishlist (I use this site myself, after all!) but don't want to make any promises I can't keep. Stay tuned!</li>
 </ul>
 </li>
 <li>Pick-your-opponent round<ul>
@@ -33,7 +35,7 @@
 </ul>
 <h2>Known issues</h2>
 <ul>
-<li>Your session may be <em>very</em> short before requiring sign-in again. This is due to a limitation of Heroku and I will be fixing this soon.</li>
+<li>Your session may be <em>very</em> short before requiring sign-in again. This is due to a limitation of Heroku and will be no longer after Squimblo 2</li>
 </ul>
 
 
